@@ -1,7 +1,8 @@
 [project]
-name = "chatbot"
+name = "src"
 version = "0.1.0"
 description = ""
+package-mode = false
 authors = [
     {name = "Christophe Vellen",email = "christophe.vellen@gmail.com"}
 ]
