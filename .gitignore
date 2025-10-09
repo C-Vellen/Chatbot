@@ -1,0 +1,12 @@
+.venv
+.env
+docs/*
+.bashrc_Chatbot
+**/__pycache__/**
+**/media/**
+**/.coverage*
+/src/src/settings/develop.py
+/src/src/settings/production.py
+**/tests/tmp
+node_modules
+/src/theme/static/css/dist/*
