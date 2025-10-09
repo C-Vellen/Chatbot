@@ -8,8 +8,7 @@ def index(request):
     context = usercontext(request)
     context.update(
         {
-            "titre_onglet": "Démo",
-            "titre_presentation": "Démonstration",
+            "titre_onglet": "Chatbot",
         }
     )
     return render(request, "home/index.html", context)
