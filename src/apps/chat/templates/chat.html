@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block content %}
+
+<section class="mt-10 flex flex-col items-center gap-10">
+
+<h1>{{ msg }}</h1>
+{% if upload %}
+    <p class="w-full p-4 border">
+        <span class="font-bold">You : </span>
+        <span>{{ text }}</span>
+    </p>
+    <p class="w-full p-4 border"> 
+        <span class="font-bold">Bot : </span>
+        <span>{{ summary }}</span>
+    </p>
+    <div class="my-2 flex flex-row justify-center sm:justify-end">
+        <a href={% url 'chat:summarize' %} class="btn btn-outline">Résumer un texte</a> 
+    </div>
+{% else %}
+    <form class="flex flex-col items-center"  enctype="multipart/form-data" method="post" action=".">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="mt-10 btn btn-outline">Envoyer</button>
+    </form>
+{% endif %}
+
+</section>
+
+{% endblock %}
