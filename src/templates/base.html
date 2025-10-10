@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static tailwind_tags template_tags%}
-<html lang="fr" class="scroll-smooth">
+<html lang="fr" data-theme="light" class="scroll-smooth">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
@@ -13,7 +13,7 @@
         {% block header %}
         {% endblock %}
     </head>
-    <body class="m-0 p-0 font-sans text-slate-700 bg-slate-100">
+    <body class="m-0 p-0 font-sans text-slate-700 bg-slate-50">
         
         <div class="w-full min-w-screen-xs min-h-screen flex flex-col justify-start items-center">
             
@@ -41,7 +41,7 @@
                 {% block content %}{% endblock %}
             </main>
             
-            <footer class="w-full mt-auto px-16 py-4 bg-margin text-slate-200">
+            <footer class="w-full mt-auto flex justify-between px-16 py-4 bg-margin text-slate-200">
                 <h2 class="text-md font-bold"> {{ Footer_description|find_content:30 }} </h2>
                 <ul class="flex flex-row justify-center items-center gap-4">
                     {% if Lien_1|find_file != "" %}
@@ -60,8 +60,8 @@
                     {% endif %}        
                 </ul>
             {% if user.is_staff %}
-                <div class="mt-4 flex flex-row justify-center sm:justify-end">
-                    <a href="/admin/" class="action-button">Administration du site</a> 
+                <div class="my-2 flex flex-row justify-center sm:justify-end">
+                    <a href="/admin/" class="btn">Administration du site</a> 
                 </div>
             {% endif %}
             </footer>
@@ -72,7 +72,7 @@
 
         {% if debug %}
         {# Utilitaire affichant les tailles d'écran - masqué en production #}
-        <div class="fixed z-30 bottom-4 left-4 bg-slate-300 p-1 rounded font-bold">
+        <div class="fixed z-30 bottom-6 left-4 bg-slate-300 p-1 rounded font-bold">
             <span class="sm:hidden">XS</span>
             <span class="hidden sm:block md:hidden">SM</span>
             <span class="hidden md:block lg:hidden">MD</span>

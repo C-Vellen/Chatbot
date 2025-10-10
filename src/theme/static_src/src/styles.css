@@ -47,9 +47,6 @@
     text-decoration: none !important;
   }
 
-  .inputbox {
-    @apply border;
-  }
 
 
 

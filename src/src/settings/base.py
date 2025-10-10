@@ -47,12 +47,13 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "home",
     "user",
+    "chat",
     "tailwind",
     "theme",
 ]
 
 if DEBUG:
-    INSTALLED_APPS += ['django_browser_reload']
+    INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -80,7 +81,7 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                'django.template.context_processors.debug',
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -159,11 +160,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # pour Django debug toolbar
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ["127.0.0.1"]
 
 # url de la page de connexion :
 LOGIN_URL = "/user/connexion"
 
 AUTH_USER_MODEL = "user.User"
 
-TAILWIND_APP_NAME = 'theme'
+TAILWIND_APP_NAME = "theme"
