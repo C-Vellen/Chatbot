@@ -18,7 +18,9 @@ dependencies = [
     "django-tailwind[reload] (>=4.2.0,<5.0.0)",
     "langchain (>=0.3.27,<0.4.0)",
     "langchain-openai (>=0.3.35,<0.4.0)",
-    "langgraph (>=0.6.10,<0.7.0)"
+    "langgraph (>=0.6.10,<0.7.0)",
+    "djangorestframework (>=3.16.1,<4.0.0)",
+    "djangorestframework-simplejwt (>=5.5.1,<6.0.0)"
 ]
 
 

@@ -27,6 +27,7 @@ load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY", "XXXXXXXXXXXXXXXXXXXXXX")
 DEBUG = os.environ.get("DEBUG", "false") == "true"
+RELOAD = os.environ.get("RELOAD", "false") == "true"
 ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS", "www.xxxxx.xx")]
 CSRF_TRUSTED_ORIGINS = [os.environ.get("CSRF_TRUSTED_ORIGINS", "www.xxxxx.xx")]
 PROTOCOL = [os.environ.get("PROTOCOL", "www.xxxxx.xx")]
@@ -48,11 +49,13 @@ INSTALLED_APPS = [
     "home",
     "user",
     "chat",
+    "rest_framework",
+    "rest_framework_simplejwt",
     "tailwind",
     "theme",
 ]
 
-if DEBUG:
+if DEBUG and RELOAD:
     INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
@@ -67,7 +70,7 @@ MIDDLEWARE = [
     "user.middleware.UserMiddleware",
 ]
 
-if DEBUG:
+if DEBUG and RELOAD:
     MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
 
 ROOT_URLCONF = "src.urls"
@@ -166,5 +169,13 @@ INTERNAL_IPS = ["127.0.0.1"]
 LOGIN_URL = "/user/connexion"
 
 AUTH_USER_MODEL = "user.User"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 100,
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
 
 TAILWIND_APP_NAME = "theme"
