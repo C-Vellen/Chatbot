@@ -20,6 +20,8 @@ from django.urls import path, re_path, include
 from django.conf import settings
 from django.views.static import serve
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 urlpatterns = [
     re_path(r"^admin/", admin.site.urls),
@@ -27,6 +29,9 @@ urlpatterns = [
     re_path(r"^chat/", include("chat.urls", namespace="chat")),
     re_path(r"^static/(?P<path>.*)$", serve, {"document_root": settings.STATIC_ROOT}),
     re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
+    re_path(r"^api-auth/", include("rest_framework.urls")),
+    re_path(r"^api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    re_path(r"^api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     re_path(
         r"^", include("home.urls", namespace="home")
     ),  # positionner toujours en dernier !
@@ -37,5 +42,9 @@ if settings.DEBUG:
 
     urlpatterns = [
         re_path(r"^__debug__/", include(debug_toolbar.urls)),
-        path("__reload__/", include("django_browser_reload.urls")),
     ] + urlpatterns
+
+    if settings.RELOAD:
+        urlpatterns = [
+            path("__reload__/", include("django_browser_reload.urls")),
+        ] + urlpatterns
