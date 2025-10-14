@@ -10,3 +10,4 @@ docs/*
 **/tests/tmp
 node_modules
 /src/theme/static/css/dist/*
+**/exemple*.txt

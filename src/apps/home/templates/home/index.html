@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <section id="accueil" class="reachable flex flex-col items-center gap-10">
+    <section id="accueil" class="reachable flex flex-col items-center gap-6">
         <div class="mt-6 p-4 flex flex-col justify-center items-start bg-slate-200">
             <div id="titre" class="mb-2 ">
                 <h1 class="text-sm font-bold sm:text-lg">{{Accueil_titre|find_content:10}}</h1>
@@ -16,12 +16,15 @@
             </div>
         </div>
         <div class="my-2 flex flex-row justify-center sm:justify-end">
-            <a href={% url 'chat:summarize' %} class="btn">Résumer un texte</a> 
+            <a href={% url 'chat:summarize' %} class="w-60 btn">Résumer le texte d'un fichier</a> 
         </div>
         <div class="my-2 flex flex-row justify-center sm:justify-end">
-            <a href={% url 'chat:chat' %} class="btn">Lancer une conversation</a> 
+            <a href={% url 'chat:chat' %} class="w-60 btn">Lancer une conversation simple</a> 
         </div>
-</section>
+        <div class="my-2 flex flex-row justify-center sm:justify-end">
+            <a href={% url 'chat:talk' %} class="w-60 btn">Lancer une conversation élaborée</a> 
+        </div>
+    </section>
 
 
 {% endblock %}
