@@ -1,0 +1,74 @@
+const chat = document.querySelector("#chat")
+const prompt = document.querySelector("#prompt")
+const userInput = document.querySelector("#input")
+const sendPrompt = document.querySelector("#send_prompt")
+const openChat = document.querySelector("#open_chat")
+const closeChat = document.querySelector("#close_chat")
+
+const chatPage = document.querySelector("#chat_page")
+
+const url_auth = 'http://127.0.0.1:8000/api-auth/login'
+const url = 'http://127.0.0.1:8000/chat/update/'
+
+
+openChat.addEventListener("click", e => {
+    context = []
+    openChat.style.display = "none";
+    chatPage.style.display = "block";
+    closeChat.style.display = "block";
+    console.log("openchat")
+})
+
+closeChat.addEventListener("click", e => {
+    chatPage.style.display = "none";
+    openChat.style.display = "block";
+    closeChat.style.display = "none";
+    console.log("closechat")
+})
+
+
+sendPrompt.addEventListener("click", async (e) => {
+
+    e.preventDefault() // indispensable pour éviter le rafraichiseement auto entrainant un "TypeError: NetworkError when attempting to fetch ressource"
+    const inputData = userInput.value
+
+    if (inputData != "") {
+        const newUserBox = document.createElement("div")
+        const newUserContent = document.createTextNode(inputData)
+        newUserBox.appendChild(newUserContent)
+        newUserBox.style.color = "#77a"
+        chat.append(newUserBox)
+        prompt.style.display = "none"
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                prompt: inputData,
+            })
+        })
+
+        const newLLMBox = document.createElement("div")
+        chat.append(newLLMBox)
+
+        const reader = response.body.getReader()
+        let output = ""
+        while (true) {
+            const { done, value } = await reader.read()
+            output = new TextDecoder().decode(value)
+            const newLLMContent = document.createTextNode(output)
+            newLLMBox.appendChild(newLLMContent)
+            if (done) {
+                prompt.style.display = "block"
+                userInput.value = ""
+                return
+            }
+        }
+
+    } else {
+        console.log("------ no inputData")
+    }
+})
+

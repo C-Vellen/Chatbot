@@ -1,5 +1,5 @@
 # video 1-Mise en place d'une architecture de projet
-PROMPT_SUMMARIZE = """Summarize the text only in english.
+PROMPT_SUMMARIZE = """Resume le texte en un maximum de 5 phrases :
     ###
     TEXT: {text}
     """
