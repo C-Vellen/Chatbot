@@ -20,7 +20,7 @@ from .chain import (
     print_update,
 )
 
-from src.settings import BASE_DIR
+from src.settings import CSRF_TRUSTED_ORIGINS
 from home.context import usercontext
 from .forms import UploadFileForm
 
@@ -77,11 +77,13 @@ def summarize_text(request):
 
 @login_required
 def chat(request):
+
     context = usercontext(request)
     context.update(
         {
             "titre_onglet": "conversation",
             "msg": "Hello ! Voulez-vous démarrer une nouvelle conversation ?",
+            "originURL": CSRF_TRUSTED_ORIGINS[0],
         }
     )
     return render(request, "chat/chat.html", context)
@@ -106,11 +108,13 @@ def answer(request):
 
 @login_required
 def talk(request):
+
     context = usercontext(request)
     context.update(
         {
             "titre_onglet": "conversation",
             "msg": "Hello ! Entrez un fichier à résumer et ensuite nous en discuterons !",
+            "originURL": CSRF_TRUSTED_ORIGINS[0],
         }
     )
 

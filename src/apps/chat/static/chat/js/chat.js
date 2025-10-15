@@ -7,9 +7,7 @@ const closeChat = document.querySelector("#close_chat")
 const mainContent = document.querySelector("#maincontent")
 const chatPage = document.querySelector("#chat_page")
 
-const url_auth = 'http://127.0.0.1:8000/api-auth/login'
-const url = 'http://127.0.0.1:8000/chat/answer/'
-
+console.log("endpoint: ", endpoint)
 
 openChat.addEventListener("click", e => {
     context = []
@@ -40,7 +38,7 @@ sendPrompt.addEventListener("click", async (e) => {
         chat.append(newUserBox)
         prompt.style.display = "none"
 
-        const response = await fetch(url, {
+        const response = await fetch(endpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
