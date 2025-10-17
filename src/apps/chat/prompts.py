@@ -1,13 +1,10 @@
-# video 1-Mise en place d'une architecture de projet
 PROMPT_SUMMARIZE = """Resume le texte en un maximum de 5 phrases :
     ###
     TEXT: {text}
     """
 
-# video 3-Création de la fonction résumé
-SYSTEM_PROMPT = """The following is a frienly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its CONVERSATION context.
-    If the AI does not know the answer of a question, it truthfully says it does not know.
-    CONVERSATION;
+SYSTEM_PROMPT = """Ce qui suit est une conversation amicale entre un humain et une IA. L'IA est bavarde et fournit de nombreux détails précis issus de son contexte de CONVERSATION.
+Si l'IA ne connaît pas la réponse à une question, elle dit honnêtement qu'elle ne la connaît pas.
     ###
-    {conversation}
+    CONVERSATION: {conversation}
 """

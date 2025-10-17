@@ -7,7 +7,7 @@
 <section class="w-full mt-10 flex flex-col items-center gap-10">
 
 <h1 id="maincontent">{{ msg }}</h1>
-<button id="open_chat" class="btn">Ouvrir le Chat</button>
+<button id="open_chat" class="btn btn-soft">Ouvrir le Chat</button>
 <div id="chat_page" class="hidden w-full px-20 flex justify-start items-start flex-col">
     <h3 class="mb-8">Posez toutes les questions que vous voulez ...</h3>
     <div id="chat" class="w-full flex justify-start items-start flex-col gap-2">
@@ -16,7 +16,7 @@
     <form method="post">
         {% csrf_token %}
         <textarea id="input" class="w-full px-4 py-1 h-6 md:w-3/4" placeholder="Ecrivez ici..." name="prompt"></textarea>
-        <button id="send_prompt" class="btn" data-url=" {% url 'chat:answer' %} " >Envoyer</button>
+        <button id="send_prompt" class="btn btn-soft" data-url=" {% url 'chat:answer' %} " >Envoyer</button>
     </form>
     </div>
     <button id="close_chat" class="mt-10 btn">Retour</button>

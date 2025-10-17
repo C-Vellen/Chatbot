@@ -7,7 +7,6 @@ const closeChat = document.querySelector("#close_chat")
 const mainContent = document.querySelector("#maincontent")
 const chatPage = document.querySelector("#chat_page")
 
-console.log("endpoint: ", endpoint)
 
 openChat.addEventListener("click", e => {
     context = []

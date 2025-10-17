@@ -4,22 +4,30 @@
 
 {% block content %}
 
-<section class="w-full mt-10 flex flex-col items-center gap-10">
+<section class="w-full mt-10 flex flex-col items-center gap-4">
 
 
 {% if not upload %}
     <h1>{{ msg }}</h1>
-    <form class="flex flex-col items-center"  enctype="multipart/form-data" method="post" action=".">
+    <form class="flex flex-col items-center" method="post" action=".">
         {% csrf_token %}
         {{ form }}
         <button type="submit" class="mt-10 btn btn-soft">Envoyer</button>
     </form>
-{% else %}
-    <p class="w-full p-4">Voici un résumé du texte contenu dans le fichier {{filename}}</p>
+{% elif video_has_transcript %}
+    <div class="w-full flex">
+        <a href="{{video_url}}">
+            <img src="{{thumbnail_url}}"/>
+        </a>
+        <p class="px-4">{{ short_description }}</p>
+    </div>
+    <p class="w-full p-4">Voici un résumé de la video <span class="font-bold">"{{ video_title }}"</span></p>
     <p class="w-full p-4 border"> 
-        <span class="font-bold">Résumé : </span>
         <span>{{ summary }}</span>
     </p>
+    <button id="open_chat" class="btn btn-soft">Commencer la discussion ...</button>
+{% else %}
+    <p class="w-full p-4"> Malheuresement, cette video n'a pas de script, je ne peux donc pas en faire le résumé.</p>
     <button id="open_chat" class="btn btn-soft">Commencer la discussion ...</button>
 {% endif %}
 

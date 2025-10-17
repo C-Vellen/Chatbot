@@ -7,7 +7,7 @@
 
 {% block content %}
     <section id="accueil" class="reachable flex flex-col items-center gap-6">
-        <div class="mt-6 p-4 flex flex-col justify-center items-start bg-slate-200">
+        <div class="mt-6 p-4 flex flex-col justify-center items-start bg-gray-200">
             <div id="titre" class="mb-2 ">
                 <h1 class="text-sm font-bold sm:text-lg">{{Accueil_titre|find_content:10}}</h1>
             </div>
@@ -15,14 +15,17 @@
                 <p>{{Accueil_description|find_content:150}}</p>
             </div>
         </div>
-        <div class="my-2 flex flex-row justify-center sm:justify-end">
-            <a href={% url 'chat:summarize' %} class="w-60 btn">Résumer le texte d'un fichier</a> 
+        <div class="flex flex-row justify-center sm:justify-end">
+            <a href={% url 'chat:summarize' %} class="w-80 p-8 btn btn-soft">Résumer le texte d'un fichier</a> 
         </div>
-        <div class="my-2 flex flex-row justify-center sm:justify-end">
-            <a href={% url 'chat:chat' %} class="w-60 btn">Lancer une conversation simple</a> 
+        <div class="flex flex-row justify-center sm:justify-end">
+            <a href={% url 'chat:chat' %} class="w-80 p-8 btn btn-soft">Lancer une conversation simple</a> 
         </div>
-        <div class="my-2 flex flex-row justify-center sm:justify-end">
-            <a href={% url 'chat:talk' %} class="w-60 btn">Lancer une conversation élaborée</a> 
+        <div class="flex flex-row justify-center sm:justify-end">
+            <a href={% url 'chat:talk' %} class="w-80 p-8 btn btn-soft">Lancer une conversation à partir d'un fichier texte</a> 
+        </div>
+        <div class="flex flex-row justify-center sm:justify-end">
+            <a href={% url 'chat:videotalk' %} class="w-80 p-8 btn btn-soft">Lancer une conversation à partir d'une video</a> 
         </div>
     </section>
 

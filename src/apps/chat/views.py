@@ -8,6 +8,8 @@ from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import StateGraph, START, END
 
+from simple_yt_api import YouTubeAPI
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .chain import (
@@ -22,7 +24,7 @@ from .chain import (
 
 from src.settings import CSRF_TRUSTED_ORIGINS
 from home.context import usercontext
-from .forms import UploadFileForm
+from .forms import UploadFileForm, UploadURL
 
 chain = None
 
@@ -38,8 +40,8 @@ def summarize_text(request):
     )
 
     upload = False
-    text = ""
-    summary = ""
+    text
+    summary
 
     if request.method == "POST":
         upload = True
@@ -55,7 +57,7 @@ def summarize_text(request):
 
             else:
                 text = "Error : only text files are supported"
-                summary = ""
+                summary
 
     else:
         form = UploadFileForm()
@@ -119,9 +121,8 @@ def talk(request):
     )
 
     upload = False
-    text = ""
-    filename = ""
-    summary = ""
+    filename = None
+    summary = None
 
     if request.method == "POST":
         upload = True
@@ -129,12 +130,12 @@ def talk(request):
         if form.is_valid():
             file = request.FILES["file"]
             filename = file.name
-            print("########### > ", filename)
-
-            s = initialize(file)
-            print("=> ", s)
+            if file.content_type != "text/plain":
+                return {"error": "Only text files are supported"}
+            content = file.read()
+            text = content.decode("utf-8")
+            s = initialize(text)
             summary = s["summary"]
-            # summary = "*** ici le résumé ***"
 
     else:
         form = UploadFileForm()
@@ -151,17 +152,9 @@ def talk(request):
     return render(request, "chat/talk.html", context)
 
 
-def initialize(file):
+def initialize(text):
 
     global chain
-
-    # test fichier textuel (copié/collé fonction précédente)
-    if file.content_type != "text/plain":
-        return {"error": "Only text files are supported"}
-    # content = await file.read()
-    content = file.read()
-    text = content.decode("utf-8")
-    print("...........", text)
 
     workflow = StateGraph(State)
     workflow.add_node(
@@ -208,3 +201,69 @@ def update(request):
     )
 
     return response
+
+
+@login_required
+def videotalk(request):
+
+    context = usercontext(request)
+    context.update(
+        {
+            "titre_onglet": "conversation",
+            "msg": "Entrez le lien d'une video Youtube, et ensuite nous pourrons en discuter !",
+            "originURL": CSRF_TRUSTED_ORIGINS[0],
+        }
+    )
+
+    upload = False
+    url = ""
+    video_has_transcript = False
+    video_title = ""
+    short_description = ""
+    thumbnail_url = ""
+    summary = ""
+
+    if request.method == "POST":
+        upload = True
+        form = UploadURL(request.POST)
+        if form.is_valid():
+
+            url = request.POST["url"].split("&")[0]
+            yt = YouTubeAPI()
+
+            try:
+                data, transcript = yt.get_video_data_and_transcript(
+                    url=url,
+                    language_code="fr",
+                    as_dict=False,
+                )
+                transcript2 = yt.get_transcript(
+                    url=url, language_code="fr", as_dict=True
+                )
+                video_has_transcript = True
+                video_title = data["title"]
+                short_description = data["short_description"]
+                thumbnail_url = data["img_url"]
+                s = initialize(transcript)
+                summary = s["summary"]
+
+            except TypeError:
+                # except  NoTranscriptFound:
+                pass
+
+    else:
+        form = UploadURL()
+
+    context.update(
+        {
+            "video_has_transcript": video_has_transcript,
+            "video_title": video_title,
+            "short_description": short_description,
+            "video_url": url,
+            "thumbnail_url": thumbnail_url,
+            "summary": summary,
+            "form": form,
+            "upload": upload,
+        }
+    )
+    return render(request, "chat/videotalk.html", context)

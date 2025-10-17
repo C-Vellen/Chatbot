@@ -12,4 +12,5 @@ urlpatterns = [
     re_path(r"^answer/$", views.answer, name="answer"),
     re_path(r"^talk/$", views.talk, name="talk"),
     re_path(r"^update/$", views.update, name="update"),
+    re_path(r"^videotalk/$", views.videotalk, name="videotalk"),
 ]
