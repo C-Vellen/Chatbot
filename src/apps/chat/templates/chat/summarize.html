@@ -17,13 +17,13 @@
         <span>{{ summary }}</span>
     </p>
     <div class="my-2 flex flex-row justify-center sm:justify-end">
-        <a href={% url 'chat:summarize' %} class="btn btn-outline">Résumer un texte</a> 
+        <a href={% url 'chat:summarize' %} class="btn btn-soft">Résumer un texte</a> 
     </div>
 {% else %}
     <form class="flex flex-col items-center"  enctype="multipart/form-data" method="post" action=".">
         {% csrf_token %}
         {{ form }}
-        <button type="submit" class="mt-10 btn btn-outline">Envoyer</button>
+        <button type="submit" class="mt-10 btn btn-soft">Envoyer</button>
     </form>
 {% endif %}
 
