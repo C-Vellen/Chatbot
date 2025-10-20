@@ -8,6 +8,7 @@ docs/*
 /src/src/settings/develop.py
 /src/src/settings/production.py
 **/tests/tmp
+tmp/*
 node_modules
 /src/theme/static/css/dist/*
 **/exemple*.txt

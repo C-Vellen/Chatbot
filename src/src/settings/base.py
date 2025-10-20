@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "home",
     "user",
     "chat",
+    "tuning",
     "rest_framework",
     "rest_framework_simplejwt",
     "tailwind",

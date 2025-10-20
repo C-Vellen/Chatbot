@@ -27,6 +27,7 @@ urlpatterns = [
     re_path(r"^admin/", admin.site.urls),
     re_path(r"^user/", include("user.urls", namespace="user")),
     re_path(r"^chat/", include("chat.urls", namespace="chat")),
+    re_path(r"^tuning/", include("tuning.urls", namespace="tuning")),
     re_path(r"^static/(?P<path>.*)$", serve, {"document_root": settings.STATIC_ROOT}),
     re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
     re_path(r"^api-auth/", include("rest_framework.urls")),

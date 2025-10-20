@@ -29,7 +29,7 @@
                             <img class="h-8" src="{% static 'img/home_white.svg' %}" />
                     </a>
                     <a href="{% url 'user:connexion' %}" title="connectez-vous !" class="text-sm m-0 p-0 w-8 h-8 border-white border-2 bg-transparent rounded-full text-center flex justify-center items-center" style="color:transparent; text-shadow: 0 0 0 #fff;">{{user|initiales}}</a>
-                    <a href="{% url 'home:index' %}" class="">
+                    <a href="{% url 'tuning:model_tuning' %}" class="">
                         <img class="h-8" src="{% static 'img/settings_white.svg' %}" />
                 </a>
                     <a id="deconnect-button" class="group hover:cursor-pointer" >
@@ -43,9 +43,13 @@
                 {% block content %}{% endblock %}
             </main>
             
-            <footer class="w-full mt-auto flex justify-between px-16 py-4 bg-margin text-slate-200">
-                <h2 class="text-md font-bold"> {{ Footer_description|find_content:30 }} </h2>
-                <ul class="flex flex-row justify-center items-center gap-4">
+            <footer class="w-full mt-auto px-4 py-4 bg-margin text-slate-200">
+                {% if user.is_staff %}
+                <div class="z-30 w-full flex justify-end -mb-10">
+                    <a href="/admin/" class="btn btn-soft">Administration du site</a> 
+                </div>
+                {% endif %}
+                <ul class="flex justify-center gap-4">
                     {% if Lien_1|find_file != "" %}
                     <li>
                         <a href="{{ Lien_1.lien }}" target=_blank >
@@ -61,11 +65,7 @@
                     </li>
                     {% endif %}        
                 </ul>
-                <div class="my-2 flex flex-row justify-center sm:justify-end">
-                    {% if user.is_staff %}
-                        <a href="/admin/" class="btn">Administration du site</a> 
-                    {% endif %}
-                </div>
+                
             </footer>
         </div>
         <div id="shadow-mask" class="hidden fixed z-20 w-full top-0 left-0 h-full bg-black opacity-50"></div>
@@ -84,6 +84,8 @@
             <span class="hidden 3xl:block ">3XL+</span>
         </div>
         {% endif %}
+
+            
         
     </body>
 </html>
