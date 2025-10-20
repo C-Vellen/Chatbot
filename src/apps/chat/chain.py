@@ -11,7 +11,11 @@ from langchain_openai import ChatOpenAI
 
 from langgraph.graph import MessagesState, END
 
-from .prompts import PROMPT_SUMMARIZE, SYSTEM_PROMPT
+from tuning.models import LLMModel, Prompt
+
+
+client = OpenAI()
+MODEL_LIST = [m.id for m in client.models.list().data]
 
 
 class State(MessagesState):
@@ -27,20 +31,20 @@ def summarize(conversation: str) -> str:
     Returns:
         str: the summary
     """
-    prompt_template = PROMPT_SUMMARIZE
+
+    model, temperature, verbosity = LLMModel.get_active_model_params()
+    SUMMARIZE_PROMPT = Prompt.get_active_prompt_text("SUMMARIZE")
+    prompt_template = SUMMARIZE_PROMPT
     prompt = PromptTemplate(template=prompt_template, input_variables=["text"])
 
     llm = ChatOpenAI(
         openai_api_key=os.environ["OPENAI_API_KEY"],
-        model=os.environ["API_MODEL"],
-        temperature=0.2,
+        model=model,
+        temperature=temperature,
     )
     chain = prompt | llm | StrOutputParser()
 
     return chain.invoke(conversation)
-
-
-client = OpenAI()
 
 
 def generate_response(prompt: str) -> GeneratorExit:
@@ -52,9 +56,9 @@ def generate_response(prompt: str) -> GeneratorExit:
     Yields:
         GeneratorExit: stream of response
     """
-
+    model, temperature, verbosity = LLMModel.get_active_model_params()
     stream = client.chat.completions.create(
-        model=os.environ["API_MODEL"],
+        model=model,
         messages=[{"role": "user", "content": prompt}],
         stream=True,
     )
@@ -76,11 +80,11 @@ def call_model(state: State, conversation_summary: str) -> dict:
     Returns:
         dict: dictionary containing the generated response message.
     """
-
+    model, temperature, verbosity = LLMModel.get_active_model_params()
     llm = ChatOpenAI(
         openai_api_key=os.environ["OPENAI_API_KEY"],
-        model=os.environ["API_MODEL"],
-        temperature=0.2,
+        model=model,
+        temperature=temperature,
     )
 
     # if history exists, add history in system message :
@@ -89,7 +93,8 @@ def call_model(state: State, conversation_summary: str) -> dict:
         system_message = f"Summary of conversation earlier: {history}"
         messages = [SystemMessage(content=system_message)] + state["messages"]
     else:
-        system_message = SYSTEM_PROMPT.format(conversation=conversation_summary)
+        SYSTEM_PROMPT = Prompt.get_active_prompt_text("SYSTEM")
+        system_message = SYSTEM_PROMPT.format(text=conversation_summary)
         messages = [SystemMessage(content=system_message)] + state["messages"]
     response = llm.invoke(messages)
     # return is a list, will be added to existing list
@@ -100,10 +105,12 @@ def summarize_history(state: State) -> dict:
     """
     Summarize history, in case of history is too long
     """
+
+    model, temperature, verbosity = LLMModel.get_active_model_params()
     llm_summarize = ChatOpenAI(
         openai_api_key=os.environ["OPENAI_API_KEY"],
-        model=os.environ["API_MODEL"],
-        temperature=0.2,
+        model=model,
+        temperature=temperature,
     )
 
     history = state.get("history", "")

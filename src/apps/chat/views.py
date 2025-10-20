@@ -40,8 +40,8 @@ def summarize_text(request):
     )
 
     upload = False
-    text
-    summary
+    text = None
+    summary = None
 
     if request.method == "POST":
         upload = True

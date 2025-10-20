@@ -1,0 +1,32 @@
+[
+    {
+        "model": "tuning.LLMModel",
+        "pk": 1,
+        "fields": {
+            "LLM": "gpt-5-nano",
+            "temperature": 0.2,
+            "verbosity": "Medium",
+            "active": true
+        }
+    },
+    {
+        "model": "tuning.Prompt",
+        "pk": 1,
+        "fields": {
+            "name": "basic summary",
+            "target": "SUMMARIZE",
+            "prompt_text": "Résume le texte suivant en un maximum de 5 phrases :",
+            "active": true
+        }
+    },
+    {
+        "model": "tuning.Prompt",
+        "pk": 2,
+        "fields": {
+            "name": "basic conversation",
+            "target": "SYSTEM",
+            "prompt_text": "Ce qui suit est une conversation amicale entre un humain et une IA. L'IA est concise et fournit des détails précis issus de son contexte de CONVERSATION. Si l'IA ne connaît pas la réponse à une question, elle dit honnêtement qu'elle ne la connaît pas.",
+            "active": true
+        }
+    }
+]
