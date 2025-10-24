@@ -5,7 +5,7 @@ from home.context import usercontext
 from chat.chain import MODEL_LIST
 
 from .models import LLMModel, Prompt, VERBOSITY_LIST, TARGET_LIST
-from .forms import LLMModelForm
+from .forms import LLMModelForm, PromptForm
 
 
 @login_required
@@ -68,8 +68,74 @@ def model_tuning(request):
     return render(request, "tuning/model_tuning.html", context)
 
 
+def deactivate_prompts(prompt):
+    if prompt.active:
+        for p in Prompt.objects.filter(target=prompt.target).exclude(id=prompt.id):
+            p.active = False
+            p.save()
+
+
 @login_required
 def prompt_tuning(request):
     context = usercontext(request)
-    context.update({"msg": "Créez ou modifiez des prompts :"})
+    target_list = [t[1] for t in TARGET_LIST]
+
+    confirmation_msg = ""
+
+    if request.method == "POST":
+
+        print(">>>> ", request.POST)
+
+        try:
+            # update prompt
+            prompt = Prompt.objects.get(id=request.POST["id"])
+            form = PromptForm(request.POST, instance=prompt)
+            form.save()
+            deactivate_prompts(prompt)
+            confirmation_msg += f" modifié: {prompt.name}\n"
+
+        except Prompt.DoesNotExist:
+            # create new prompt
+            form = PromptForm(request.POST)
+            new_prompt = form.save()
+            deactivate_prompts(new_prompt)
+            confirmation_msg += f" création: {new_prompt.name} "
+
+        except ValueError:
+            pass
+
+        delete_list = [
+            k.split("-")[-1] for k in request.POST.keys() if "delete-prompt-" in k
+        ]
+        delete_prompt_list = []
+        for i in delete_list:
+            try:
+                # delete prompts
+                prompt = Prompt.objects.get(id=int(i))
+                delete_prompt_list.append(prompt.name)
+                prompt.delete()
+            except ValueError:
+                pass
+
+        if delete_prompt_list:
+            confirmation_msg += f" supprimé: {', '.join(delete_prompt_list)}"
+
+        print("> ", delete_list)
+
+    if confirmation_msg:
+        msg = "CONFIRMATION : " + confirmation_msg
+    else:
+        msg = "Créer, modifier, supprimer les prompts :"
+
+    all_prompts = Prompt.objects.all()
+
+    context.update(
+        {
+            "titre_onglet": "Tuning prompts",
+            "msg": msg,
+            "target_list": target_list,
+            "all_prompts": all_prompts,
+        }
+    )
+
     return render(request, "tuning/prompt_tuning.html", context)

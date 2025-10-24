@@ -56,6 +56,10 @@
                 {% endfor %}
             </select>
         {% endfor%}
+        <a href={% url 'tuning:prompt_tuning' %} class="mt-2 w-full btn btn-sm btn-info">modifier les prompts</a> 
+
+
+        </fieldset>
     
     <div class="mt-12 flex justify-between gap-4">
         <a href={% url 'home:index' %} class="w-32 btn btn-soft">Annuler</a> 
