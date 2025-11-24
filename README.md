@@ -2,27 +2,49 @@
 
 ## &#128203; Généralités :
 - python3.12 / django 5.2 
+- principales librairies utiisées :
+    - langchain, langraph
+    - django-rest framework
+- API openai pour les LLM
 - base de donnée mysql ou postgresql
-- auteur : 
-- admin : adminDemo
-- pw :    0000
+- auteur : Christophe Vellen
 
-##  &#8205;&#127891; Démonstration : [ici](https://www.xxxxxx.fr)
+
+##  &#8205;&#127891; Démonstration : [ici](https://www.chatbot.experientiae.fr/) [accès protégé par mot de passe]
+
 
 ## &#129520; Fonctionnalités :
-### Fonctionnalités 
-### Fonctionnalités 
+- accueil :
+<p align="center">
+<img src="previews/accueil.png" width="50%" alt="Aperçu de l'application">
+</p>
 
+- résumé d'un texte
+- conversation simple (sans mémorisation)
+- résumé d'un texte + conversation à partir de ce texte (avec mémorisation des échanges)
+<p align="center">
+<img src="previews/texte-chat.png" width="50%" alt="Aperçu de l'application">
+</p>
 
+- résumé d'une video youtube + conversation à partir de cette video (avec mémorisation des échanges)
+<p align="center">
+<img src="previews/video-chat.png" width="50%" alt="Aperçu de l'application">
+</p>
 
+- réglages des modèles :
+    - choix d'un modèle parmi ceux de l'API openai : platform.openai.com
+    - choix de la température (plus ou moins créatif)
+    - choix de la verbosité
+<p align="center">
+<img src="previews/Tuning-models.png" width="50%" alt="Aperçu de l'application">
+</p>
 
-## &#129489;&#8205;&#127891; Les utilisateurs :
-
-- #### cas 1 : 
-   
-- #### cas 2 : 
-        
-## &#129489;&#8205;&#129309;&#8205;&#129489;  Les groupes :
+- réglage des prompts système :
+    - modification et enregistrement des prompts pour le résumé
+    - modification et enregistrement des prompts système
+<p align="center">
+<img src="previews/Tuning-prompts.png" width="50%" alt="Aperçu de l'application">
+</p>
 
 
 ## &#128736; Installation : 
@@ -36,18 +58,17 @@
 
 - cloner le projet :
 ```bash
-    git clone https://xxxxxxxxx.git
+    git clone https://github.com/C-Vellen/Chatbot.git
 ```
 - créer une base de donnée Mysql ou Postgresql
 
-- en développement, créer et paramétrer /mooc/mooc/settings/develop.py, ou bien définir des variables d'environnement :
+- en développement, créer et paramétrer src/src/settings/develop.py, ou bien définir des variables d'environnement :
     ```bash 
         SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxx'
-        DEBUG = True
+        RELOAD = True
         ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
         CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000", "http://localhost:8000"]
         PROTOCOL = "http"
-        SITE_ID = 1
         DATABASES = {
             'default':  {
                 'ENGINE': 'django.db.backends.postgresql' ou 'django.db.backends.mysql,
@@ -60,7 +81,7 @@
         }
         
     ``` 
-- en production, créer et paramétrer /mooc/mooc/settings/production.py ou bien définir des variables d'environnement,:
+- en production, créer et paramétrer src/src/settings/production.py ou bien définir des variables d'environnement,:
     ```bash 
         SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxx'
         DEBUG = False
@@ -70,7 +91,7 @@
         SITE_ID = 1
         DATABASES = {
             'default':  {
-                'ENGINE': 'django.db.backends.postgresql' ou 'django.db.backends.mysql,
+                'ENGINE': 'django.db.backends.postgresql' ou 'django.db.backends.mysql',
                 'NAME': 'xxxxxxxxxxxx',
                 'USER': 'xxxxxxxxxxxx',
                 'PASSWORD': 'xxxxxxxxxxxxx',
@@ -81,38 +102,41 @@
         STATIC_ROOT = 'chemin vers fichiers statiques sur le serveur'
         MEDIA_ROOT =  'chemin vers fichiers media sur le serveur'
     ``` 
-
+- définir en variable d'environnement l'API token pour accéder aux modèles d'openai :
+    ```bash
+        OPENAI_API_KEY='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    ```
 - installer les dépendances, définies dans le fichier **pyproject.toml** :
     ```bash
         poetry install
     ```
 
 - activer l'environnement virtuel:
-    sur console du serveur, à la racine du projet (dossier /Mooc/ ) :
+    sur console du serveur, à la racine du projet:
     ```bash 
         source .venv/bin/activate
     ```
     - première migration de la base de donnée :
     ```bash
-        ./mooc/manage.py migrate
+        ./src/manage.py migrate
     ```
     - création du superuser (administrateur):
     ```bash
-        ./mooc/manage.py createsuperuser
+        ./src/manage.py createsuperuser
     ```
-    - création des groupes, catégories et pré-remplissage de la bd (valeurs par défaut):
+    - pré-remplissage de la base de données (valeurs par défaut dans dossiers fixtures/):
     ```bash
-        ./mooc/manage.py initgroups
+        ./src/manage.py loaddata home.json tuning.json
     ```
     - initialisation tailwind :
     ```bash
-        ./mooc/manage.py tailwind install
-        ./mooc/manage.py tailwind build
+        ./src/manage.py tailwind install
+        ./src/manage.py tailwind build
     ```
 
     - collecte des fichiers statiques (en production) :
     ```bash
-        ./mooc/manage.py collectstatic
+        ./src/manage.py collectstatic
     ```
 
     - lancer le serveur (voir ci-dessous), se connecter en tant qu'administrateur et aller sur l'administration django
@@ -120,15 +144,12 @@
         - compléter les champs image et fichier des tables home/libelles et home/defaultcontent
 
 ## &#128640; Lancement du serveur de développement :
-- option 1 : en ligne de commande
+
     ```bash
-        ./mooc/manage.py tailwind dev
+        source .venv/bin/activate
+        ./src/manage.py tailwind dev
     ```
 
 
-## &#8505;&#65039; Informations :
-
-    dépendances : pyproject.toml
-    
 
 
