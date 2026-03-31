@@ -43,9 +43,7 @@ if settings.DEBUG:
 
     urlpatterns = [
         re_path(r"^__debug__/", include(debug_toolbar.urls)),
+        path("__reload__/", include("django_browser_reload.urls")),
     ] + urlpatterns
 
-    if settings.RELOAD:
-        urlpatterns = [
-            path("__reload__/", include("django_browser_reload.urls")),
-        ] + urlpatterns
+

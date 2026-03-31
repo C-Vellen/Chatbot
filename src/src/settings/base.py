@@ -18,26 +18,14 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-load_dotenv()
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "XXXXXXXXXXXXXXXXXXXXXX")
-DEBUG = os.environ.get("DEBUG", "false") == "true"
-RELOAD = os.environ.get("RELOAD", "false") == "true"
-ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS", "www.xxxxx.xx")]
-CSRF_TRUSTED_ORIGINS = [os.environ.get("CSRF_TRUSTED_ORIGINS", "www.xxxxx.xx")]
-PROTOCOL = [os.environ.get("PROTOCOL", "www.xxxxx.xx")]
-
-
 APPS_DIR = os.path.join(BASE_DIR, "apps")
 sys.path.insert(1, APPS_DIR)
 
-# Application definition
+# load database parameters in environnement:
+dotenv_path = Path( os.path.join(BASE_DIR, '../.env'))
+load_dotenv(dotenv_path=dotenv_path)
 
+# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -45,7 +33,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
     "home",
     "user",
     "chat",
@@ -56,9 +43,6 @@ INSTALLED_APPS = [
     "theme",
 ]
 
-if DEBUG and RELOAD:
-    INSTALLED_APPS += ["django_browser_reload"]
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -67,12 +51,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "user.middleware.UserMiddleware",
 ]
-
-if DEBUG and RELOAD:
-    MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
 
 ROOT_URLCONF = "src.urls"
 
@@ -102,7 +82,7 @@ WSGI_APPLICATION = "src.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("DB_ENG", "table"),
+        "ENGINE": os.environ.get("DB_ENG", "postgres"),
         "NAME": os.environ.get("DB_NAME", "table"),
         "USER": os.environ.get("DB_USER", "postgres"),
         "PASSWORD": os.environ.get("DB_PASSWORD", "passwd"),
@@ -145,7 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 # configuration fichiers statiques en développement :
 STATICFILES_DIRS = [
@@ -153,9 +133,7 @@ STATICFILES_DIRS = [
 ]
 
 # Configuration des media :
-MEDIA_URL = "media/"
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
