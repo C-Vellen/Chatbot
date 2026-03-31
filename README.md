@@ -62,50 +62,10 @@
 ```
 - créer une base de donnée Mysql ou Postgresql
 
-- en développement, créer et paramétrer src/src/settings/develop.py, ou bien définir des variables d'environnement :
-    ```bash 
-        SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxx'
-        RELOAD = True
-        ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-        CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000", "http://localhost:8000"]
-        PROTOCOL = "http"
-        DATABASES = {
-            'default':  {
-                'ENGINE': 'django.db.backends.postgresql' ou 'django.db.backends.mysql,
-                'NAME': 'xxxxxxxxxxxx',
-                'USER': 'xxxxxxxxxxxx',
-                'PASSWORD': 'xxxxxxxxxxxxx',
-                'HOST': '127.0.0.1',
-                'PORT': xxxx,
-            }
-        }
-        
+- en développement, créer et paramétrer settings/develop.py (voir develop.example.py)
     ``` 
-- en production, créer et paramétrer src/src/settings/production.py ou bien définir des variables d'environnement,:
-    ```bash 
-        SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxx'
-        DEBUG = False
-        ALLOWED_HOSTS = ['www.xxxxx.xx', ... ]
-        CSRF_TRUSTED_ORIGINS = ['https://www.xxxxx.xx', ... ]
-        PROTOCOL = 'https'
-        SITE_ID = 1
-        DATABASES = {
-            'default':  {
-                'ENGINE': 'django.db.backends.postgresql' ou 'django.db.backends.mysql',
-                'NAME': 'xxxxxxxxxxxx',
-                'USER': 'xxxxxxxxxxxx',
-                'PASSWORD': 'xxxxxxxxxxxxx',
-                'HOST': '127.0.0.1',
-                'PORT': xxxx,
-            }
-        }
-        STATIC_ROOT = 'chemin vers fichiers statiques sur le serveur'
-        MEDIA_ROOT =  'chemin vers fichiers media sur le serveur'
-    ``` 
-- définir en variable d'environnement l'API token pour accéder aux modèles d'openai :
-    ```bash
-        OPENAI_API_KEY='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    ```
+- en production, créer et paramétrer settings/production.py (voir production.example.py)
+- définir en variable d'environnement les paramètres de la base de données (voir .env.example)
 - installer les dépendances, définies dans le fichier **pyproject.toml** :
     ```bash
         poetry install
