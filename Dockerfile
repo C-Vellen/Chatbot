@@ -4,7 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=src.settings
 
-WORKDIR /app/chat
+WORKDIR /app
 
 RUN pip install poetry
 COPY pyproject.toml poetry.lock ./
