@@ -7,9 +7,6 @@ DEBUG=False
 ALLOWED_HOSTS =  ['mondomaine.fr', 'www.mondomaine.fr']
 CSRF_TRUSTED_ORIGINS = ["https://mondomaine.fr", "https://www.mondomaine.fr"]
 
-STATIC_ROOT = "/app/chat/staticfiles"
-MEDIA_ROOT = "/app/chat/media"
+STATIC_ROOT = "/app/src/staticfiles"
+MEDIA_ROOT = "/app/src/media"
 
-OPENAI_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-API_MODEL = "gpt-5-nano"
- 

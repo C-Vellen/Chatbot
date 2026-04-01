@@ -10,6 +10,5 @@ docs/*
 **/tests/tmp
 tmp/*
 node_modules
-/src/theme/static/css/dist/*
 **/exemple*.txt
 db.json
