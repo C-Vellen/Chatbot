@@ -18,6 +18,3 @@ MIDDLEWARE += [
     ] 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-OPENAI_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-API_MODEL = "gpt-5-nano"
