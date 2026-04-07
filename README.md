@@ -10,7 +10,7 @@
 - auteur : Christophe Vellen
 
 
-##  &#8205;&#127891; Démonstration : [ici](https://www.chatbot.experientiae.fr/) [accès protégé par mot de passe]
+##  &#8205;&#127891; Démonstration : [ici](https://www.chat.ecosketch.fr/) [accès protégé par mot de passe]
 
 
 ## &#129520; Fonctionnalités :
